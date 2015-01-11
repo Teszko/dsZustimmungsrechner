@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>AG test</title>
+    <script src="vendor/js/jquery-1.11.2.min.js"></script>
+</head>
+<body>
+<p>Anzahl Angriffe: 10000000</p>
+<p>Erfolgreich: <span id="erfolgreich">0</span></p>
+<p>Erfolglos: <span id="erfolglos">0</span></p>
+<p>Verhältnis: <span id="ratio">0</span></p>
+<script>
+    var pool1 = 0;
+    var pool2 = 0;
+    for (var i=0; i<10000000; i++) {
+        var value = 100;
+        for (var j=0; j<4; j++) {
+            var rand = Math.round(Math.random() * 100000000) % 11;
+            var abzug = rand + 20;
+            value -= abzug;
+        }
+        if (value > 0) {
+            pool1++;
+        } else {
+            pool2++;
+        }
+    }
+    console.log("Anzahl erfolgreicher Angriffe: ", pool2);
+    console.log("Anzahl erfolgloser Angriffe: ", pool1);
+    var ratio = pool2/(pool1+pool2);
+    console.log("Verhältnis: ", ratio);
+    $("#erfolgreich").text(pool2);
+    $("#erfolglos").text(pool1);
+    $("#ratio").text(ratio);
+</script>
+</body>
+</html>

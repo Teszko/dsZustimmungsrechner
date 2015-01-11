@@ -63,7 +63,6 @@ function fillMarkoff (M, skip, range) {
             M[i][m-1] = Math.min((11 - (m - (i + skip + 1))) / 11, 1);
         }
     }
-    console.log(M);
     return M;
 }
 
