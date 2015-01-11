@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>DS AG Tool</title>
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+    </style>
+
+    <script src="vendor/js/jquery-1.11.2.min.js"></script>
+    <script src="vendor/js/rangeslider.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script src="vendor/js/Chart.Core.js"></script>
+    <script src="vendor/js/Chart.Bar.js"></script>
+    <script src="js/markow.js"></script>
+    <script src="js/ui.js"></script>
+</head>
+<body>
+
+    <nav class="navbar navbar-inverse navbar-default">
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">DS Zustimmungsrechner</a>
+            </div>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#">AG Wellen:</a></li>
+                <li><a href="#" onclick="prevStep();"><<</a></li>
+                <li><a href="#" class="zsLabel">0</a></li>
+                <li><a href="#" onclick="nextStep();">>></a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12" id="canvasContainer">
+                <canvas id="myChart" width="1400" height="400"></canvas>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <h3>DS Zustimmungsrechner</h3>
+                <p>
+                    Dieser Rechner zeigt die Wahrscheinlichkeitsverteilung für die Zustimmung nach einer
+                    gegebenen Anzahl von Angriffswellen mit AG und soll helfen zu entscheiden, wie viele AGs ihr braucht.
+                </p>
+                <p>
+                    In der oberen Menüleiste kann man aktuell angezeigte AG Welle ändern (max 5).
+                </p>
+                <p>
+                    Die berechneten Werte sind in Prozent.
+                </p>
+            </div>
+            <div class="col-md-2">
+            </div>
+            <div class="col-md-4">
+                <table class="table">
+                    <tbody>
+                    <tr>
+                        <td>AG Wellen</td>
+                        <td class="zsLabel">0</td>
+                    </tr>
+                    <tr id="captureChanceLine">
+                        <td>Wahrscheinlichkeit für Eroberung</td>
+                        <td id="captureChanceLable">0%</td>
+                    </tr>
+                    <tr>
+                        <td>Zustimmungsverlust durch Adelsgeschlecht</td>
+                        <td>20 - 30</td>
+                    </tr>
+                    <tr>
+                        <td>Zustimmung vor erstem Eintreffen</td>
+                        <td id="initialValueLabel">
+                            <div class="input-group" style="width: 100px;">
+                                <input type="text" class="form-control" id="initialValueInput" value="100">
+                                <span class="input-group-btn">
+                                    <button type="button" class="btn btn-default" onClick="changeInitialValue()">Set</button>
+                                </span>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Feste y-Skala</td>
+                        <td><input type="checkbox" onclick="toggleYAxis(this)"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div><!-- /.container -->
+
+    <script>
+        $('#ags').rangeslider();
+
+        function changeStep (step) {
+            console.log("step ", step);
+        }
+
+        var l = [];
+        for (var i=100; i>=0; i--) {
+            l.push(i+"");
+        }
+
+        var options = {
+            barValueSpacing : 2,
+            animationSteps : 20,
+            scaleOverride: false,
+            scaleSteps: 10,
+            scaleStepWidth: 10,
+            scaleStartValue: 0
+        };
+
+        var data = {
+            labels: l,
+            datasets: [
+                    {
+                        label: "ZS",
+                        fillColor: "rgba(151,187,205,0.5)",
+                        strokeColor: "rgba(151,187,205,0.8)",
+                        highlightFill: "rgba(151,187,205,0.75)",
+                        highlightStroke: "rgba(151,187,205,1)",
+                        data: state[0]
+                    }
+                ]
+        };
+
+        var canvas = document.getElementById("myChart");
+        var ctx = canvas.getContext("2d");
+        canvas.width = $("#canvasContainer").width();
+        canvas.height = $("#canvasContainer").height();
+        myNewChart = new Chart(ctx).Bar(data, options);
+        updateCaptureChance();
+    </script>
+</body>
+</html>
