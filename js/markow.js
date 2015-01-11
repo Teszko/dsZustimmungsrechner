@@ -53,17 +53,17 @@ function matrixVectorMultiplication (A, v) {
 function fillMarkoff (M, skip, range) {
     var m = M.length;
     for (var i=0; i<m; i++) {
-        if ((i+skip-m) >= 0) {
-            M[i][m-1] = 1;
-        } else {
-            var ratio = 1 / Math.min(range+1, m-(i+skip));
-            for (var j = 0; j < m; j++) {
-                if (j >= (i + skip) && j <= (i + skip + range)) {
-                    M[i][j] = ratio;
-                }
+        var ratio = 1 / 11;
+        for (var j = 0; j < m; j++) {
+            if (j >= (i + skip) && j <= (i + skip + range)) {
+                M[i][j] = ratio;
             }
         }
+        if ((i+skip+range-m) >= 0) {
+            M[i][m-1] = Math.min((11 - (m - (i + skip + 1))) / 11, 1);
+        }
     }
+    console.log(M);
     return M;
 }
 
