@@ -93,16 +93,3 @@ function initMarkox (sv) {
 }
 
 state = initMarkox(100);
-/*
-console.log(M);
-console.log(v);
-v1 = matrixVectorMultiplication (M, v);
-console.log(v);
-v2 = matrixVectorMultiplication (M, v1);
-console.log(v);
-v3 = matrixVectorMultiplication (M, v2);
-console.log(v);
-v4 = matrixVectorMultiplication (M, v3);
-console.log(v);
-v5 = matrixVectorMultiplication (M, v4);
-console.log(v); */
